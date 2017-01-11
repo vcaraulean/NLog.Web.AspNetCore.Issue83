@@ -43,7 +43,8 @@ namespace WebApplication2
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory
                 .AddDebug()
-                .AddNLog();
+                //.AddNLog()
+                .AddProvider(new CustomLoggerProvider(app.ApplicationServices.GetService<IHttpContextAccessor>()));
 
             if (env.IsDevelopment())
             {
@@ -55,7 +56,7 @@ namespace WebApplication2
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.AddNLogWeb();
+            //app.AddNLogWeb();
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
